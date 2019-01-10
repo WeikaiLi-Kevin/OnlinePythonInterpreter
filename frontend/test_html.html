@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test</title>
+</head>
+<body>
+<script src="jquery.js"></script>
+<script src="csrf.js"></script>
+<textarea id="input"></textarea>
+<button id="run" type="button">Run</button>
+<textarea id="output"></textarea>
+<script>
+    function getInput() {
+        var input = document.getElementById("input").value;
+        return input;
+    }
+    function getOutput(data) {
+        console.log(data)
+        document.getElementById("output").value = data[0]['code'];
+    }
+    $('#run').click(function(){
+
+
+        var x = $.ajax({
+           type:"POST",
+           url:"/api/v1/code/?run",
+            data: {'code':getInput()},
+           dataType: 'json',
+           success: getOutput,
+           error: function(){
+               console.log("error")
+           }
+        });
+
+    })
+
+</script>
+
+</body>
+</html>
